@@ -97,7 +97,9 @@ fn main() {
 ```
 5. you can now use `rprintln!` throughout your code to print messages
 6. run cargo embed and you will see responses coming back from the device. ctrl-c to exit
-7. add this to the Embed.toml
+
+## Debugging (with GDB)
+1. add this to the Embed.toml
 ```toml
 [default.gdb]
 enabled = true
@@ -105,20 +107,27 @@ enabled = true
 [default.reset]
 halt_afterwards = true
 ```
-8. disable rtt by changing the default.rtt to this
+2. disable rtt by changing the default.rtt to this
 ```toml
 [default.rtt]
 # enabled = true
 enabled = false
 ```
-9. remove the rprintln stuff
-10. in one terminal, `run cargo embed`.
-11. in another terminal, run `arm-none-eabi-gdb <path_to_elf>`
-12. gdb should now be running
-13. in gdb run `target remote :1337` to connect to device
-14. gdb is very powerful and can do many things.
+3. remove the rprintln stuff
+4. in one terminal, `run cargo embed`.
+5. in another terminal, run `arm-none-eabi-gdb <path_to_elf>`
+6. gdb should now be running
+7. in gdb run `target remote :1337` to connect to device
+8. gdb is very powerful and can do many things.
     - to view registers, run `info registers`
     - add a breakpoint with `break <file_name>:<line_number>`
+
+## Actually doing something
+
+- Install the microbit crate from cargo. Note that there are two separate crates, one for each different version of microbit.
+- Also worth noting is that you will need to include the crate in your main.rs or cargo embed will fail to compile.
+
+
 
 
 
