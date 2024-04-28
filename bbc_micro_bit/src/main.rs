@@ -5,13 +5,9 @@
 
 use cortex_m::asm::nop;
 use cortex_m_rt::entry;
-use panic_halt as _;
+// use panic_halt as _;
 use rtt_target::{rprintln, rtt_init_print};
-use microbit::{
-    board::Board,
-    display::blocking::Display,
-    hal::{prelude::*, Timer},
-};
+
 
 #[entry]
 unsafe fn main() -> ! {
@@ -25,10 +21,11 @@ unsafe fn main() -> ! {
     }
 }
 
-// use core::panic::PanicInfo;
-// #[panic_handler]
-// unsafe fn panic_handler(_i: &PanicInfo) -> ! {
-//     loop {
+use core::panic::PanicInfo;
+#[panic_handler]
+unsafe fn panic_handler(_i: &PanicInfo) -> ! {
+    rprintln!("FUCK! ");
+    loop {
 
-//     }
-// }
+    }
+}
