@@ -34,14 +34,14 @@ The first thing to determine is the architecture. This can be done by looking up
 1. start a new project with cargo new
 2. set up main file for bare metal (No OS libraries)
     - add `#![no_main]` and `#1[no_std]` to the top of the main file
-3. To avoid doing everythin from scratch, we will download the cortex-m-rt crate, which will deal with memory mapping and all the low level stuff that needs to happen for our micro controller to run our program.
+3. To avoid doing everything from scratch, we will download the cortex-m-rt crate, which will deal with memory mapping and all the low level stuff that needs to happen for our micro controller to run our program.
 4. for this library, we will need to provide a `memory.x` file that specifies the start address and size for our flash memory and ram. This information can be found on the data sheet for the device and the data sheet for the microcontroller (it is linked in the BBC micro bit data sheet). NOTE: Make sure there is no trailing new line in the file, the compiler hates that.
     - NOTE: in the data sheet for the nordic micro controller on the micro bit the flash is referred to as "code" and the ram is referred to as "sram"
 5. `cargo add cortex-m-rt`
 6. set up your memory.x file
 7. add the entry attribute from the library to your main function `#[entry]`
     - you will also need to make the function unsafe and never return, so the definition is like: `unsafe fn main() -> !`
-8. will not strictly necesssary, for convenience, we can create a .cargo/config.toml to pass the necessary compiler flags every time we run `cargo run/build` also adjust the vscode settings for this compiler target so rust analyzer calms down
+8. will not strictly necesssary, for convenience, we can create a `.cargo/config.toml` to pass the necessary compiler flags every time we run `cargo run/build` also adjust the vscode settings for this compiler target so rust analyzer calms down
 9. Now if we run `cargo check` we can see it wants a `panic_handler`. this get called when a `panic!` occurs. It is where your code goes to exit after a fault.
 10. the panic handler uses the `#[panic_handler]` decorator and has a definition like this: `unsafe fn panic_handler(_i: &PanicInfo) -> !`
 11. for our purposes, we will use the `panic_halt` crate, which halts when a panic occurs. to use it, import it in the main file with `use panic_halt as _;` 
@@ -65,7 +65,7 @@ The first thing to determine is the architecture. This can be done by looking up
     - unplug device and plug it back in
     - see where the device enumerated with `lsusb | grep -i "NXP ARM mbed"`
     - check permissions with `ls -l /dev/bus/usb/<bus>/<device>`
-21. It should work. To remove the need to pass the argument every time, will will create an `Embed.toml` file in the root of the project
+21. It should work. To remove the need to pass the argument every time, we will create an `Embed.toml` file in the root of the project
     - add this stuff:
     ```toml
     [default.general]
